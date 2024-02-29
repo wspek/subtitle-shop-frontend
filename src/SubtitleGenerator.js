@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Hourglass } from 'react-loader-spinner';
 import './SubtitleGenerator.css';
+import { useNavigate } from 'react-router-dom';
 
 
 const SubtitleGenerator = () => {
   const [videoUrl, setVideoUrl] = useState('');
-  const [subtitle, setSubtitle] = useState('');
+  const [subtitle, setSubtitle] = useState(localStorage.getItem('subtitle') || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
 //   const handleGenerateSubtitle = async () => {
 //     setLoading(true);
@@ -79,6 +81,12 @@ const SubtitleGenerator = () => {
     URL.revokeObjectURL(url);
   };
 
+  const navigateToEditPage = () => {
+    localStorage.setItem('subtitle', subtitle);
+    navigate('/edit', { state: { subtitle: subtitle } }); // Updated to use navigate with state
+  };
+
+
   return (
     <div>
       <input
@@ -102,6 +110,7 @@ const SubtitleGenerator = () => {
           <div className="buttons-container">
             <button onClick={() => navigator.clipboard.writeText(subtitle)}>Copy to Clipboard</button>
             <button onClick={downloadSubtitles}>Download Subtitles</button>
+            <button onClick={navigateToEditPage}>Edit Subtitle</button>
           </div>
           <textarea value={subtitle} readOnly className="subtitle-display"></textarea>
         </div>
