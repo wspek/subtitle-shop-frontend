@@ -66,8 +66,19 @@ const SubtitleGenerator = () => {
       setLoading(false);
     }
   };
-  
-  
+
+  const downloadSubtitles = () => {
+    const blob = new Blob([subtitle], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = "subtitles.txt"; // or "subtitles.srt" depending on your format
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div>
       <input
@@ -88,6 +99,10 @@ const SubtitleGenerator = () => {
       {subtitle && (
         <div className="subtitle-container">
           <h3>Generated Subtitles:</h3>
+          <div className="buttons-container">
+            <button onClick={() => navigator.clipboard.writeText(subtitle)}>Copy to Clipboard</button>
+            <button onClick={downloadSubtitles}>Download Subtitles</button>
+          </div>
           <textarea value={subtitle} readOnly className="subtitle-display"></textarea>
         </div>
       )}

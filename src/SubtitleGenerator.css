@@ -6,13 +6,18 @@
     background-color: #f9f9f9;
     border: 1px solid #ccc;
     box-sizing: border-box;
-  }
+}
   
-  .error-message {
+.error-message {
     color: #D8000C;
     background-color: #FFD2D2;
     padding: 10px;
     margin-top: 20px;
     border-radius: 5px;
-  }
+}
+
+.buttons-container {
+  margin-bottom: 10px; /* Adds space below the buttons, above the textarea */
+}
+
   
