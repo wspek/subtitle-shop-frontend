@@ -6,26 +6,11 @@ import { useNavigate } from 'react-router-dom';
 
 
 const SubtitleGenerator = () => {
+  const navigate = useNavigate();
   const [videoUrl, setVideoUrl] = useState('');
   const [subtitle, setSubtitle] = useState(localStorage.getItem('subtitle') || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
-
-//   const handleGenerateSubtitle = async () => {
-//     setLoading(true);
-//     try {
-//       // Update the URL to match your Django backend's actual URL and endpoint
-//       const response = await axios.post('http://localhost:8000/api/pipeline/get-subtitle/', {
-//         youtube_url: videoUrl // Changed from { videoUrl } to { youtube_url: videoUrl }
-//       });
-//     } catch (error) {
-//       console.error('There was an error generating the subtitle:', error);
-//       alert('Failed to generate subtitle. Please check the console for more information.');
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
 
   const handleGenerateSubtitle = async () => {
     setLoading(true);
@@ -86,6 +71,11 @@ const SubtitleGenerator = () => {
     navigate('/edit', { state: { subtitle: subtitle } }); // Updated to use navigate with state
   };
 
+//  const navigateToTranslatePage = () => {
+//    localStorage.setItem('subtitle', subtitle);
+//    navigate('/translate', { state: { subtitle: subtitle } }); // Updated to use navigate with state
+//  };
+
 
   return (
     <div>
@@ -101,7 +91,7 @@ const SubtitleGenerator = () => {
       {error && <div className="error-message">{error}</div>}
       {loading && (
         <div>
-            <Hourglass color="#00BFFF" height={30} width={30}/>
+          <Hourglass color="#00BFFF" height={30} width={30}/>
         </div>
       )}
       {subtitle && (
